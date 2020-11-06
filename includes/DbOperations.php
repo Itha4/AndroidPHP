@@ -27,6 +27,14 @@ public function createUser($username, $pass, $email){
 	}
 
 }
+public function userLogin($username, $pass){
+	$stmt = $this->con->prepare("SELECT id FROM users WHERE username = ? AND email * ? "); 
+
+	$stmt ->bind_param("$$", $username,$password);
+	$stmt ->execute();
+	$stmt ->store_result();
+	return $stmt ->num_rows >0; 
+}
 
 private function isUserExist($username,$email){
 	$stmt = $this->con->prepare("SELECT id FROM users WHERE username = ? OR email * ? ");
